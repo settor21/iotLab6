@@ -21,6 +21,8 @@ Servo myservo;
 #define SCL_PIN 22 // SCL pin for LCD
 #define MOTOR_PIN 13 // Motor pin set on/off based on water level
 #define MAX_DIST 60 //centimeters
+#define LDR_PIN 35 // Light intensity
+#define LDR_IND 32 // LED indicator
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 float duration_us, distance_cm,Water_level;
@@ -72,8 +74,7 @@ void handleNotFound(){
 //    server.send(200, "text/plain","hello from esp32");
 //    }
 
-     void baseHandle(){
-    
+void baseHandle(){    
     server.send(200, "text/html",page);
     }
 
@@ -119,6 +120,7 @@ void setup() {
   // configure the echo pin to input mode
   pinMode(LED_PIN, OUTPUT);
 
+  pinMode(LDR_IND,OUTPUT);
   servo.attach(MOTOR_PIN);
 
   servo.write(0);
@@ -181,7 +183,7 @@ void loop(void) {
   distance_cm = 0.017 * duration_us;
 
 
-  Water_level = MAX_DIST - distance_cm;
+  Water_level = distance_cm;
  if (manualState == LOW){
  if (Water_level<=10){
     digitalWrite(LED_PIN,HIGH);
@@ -195,30 +197,43 @@ void loop(void) {
 
   }
 
-  lcd.setCursor(0,0);
-  lcd.print("Water Level");
-  lcd.setCursor(0,1);
+  // lcd.setCursor(0,0);
+  // lcd.print("Water Level");
+  // lcd.setCursor(0,1);
   
-  if (Water_level>=0){
-    lcd.print(Water_level);
-    lcd.setCursor(7,1);
-    lcd.print("cm"); 
-  }
-  else{ // does not show negative depth
-    lcd.print(Out of Bounds); 
-  }
+  // if (Water_level>=0){
+  //   lcd.print(Water_level);
+  //   lcd.setCursor(7,1);
+  //   lcd.print("cm"); 
+  // }
+  // else{ // does not show negative depth
+  //   lcd.print(Out of Bounds); 
+  // }
   
-  
-  
+  //LDR functionality
+  int ldrStatus = analogRead(ldrPin);
+  Serial.print("Light intensity:");
+  Serial.println(ldrStatus);
+
   Serial.print("Water level: ");
   Serial.print(Water_level); 
   Serial.println(" cm");
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
- 
+  
+  lcd.setCursor(0,0);
+  lcd.print("Distance: ");
+  lcd.print(Water_level);
+  lcd.setCursor(1,0);
+  lcd.print("Light Int: ");
+  lcd.print(ldrStatus);
+  
+  
+  
   delay(1500);
   GET_RQ();
+
 
 //// Normally Open configuration, send LOW signal to let current flow
 //// (if you're usong Normally Closed configuration send HIGH signal)

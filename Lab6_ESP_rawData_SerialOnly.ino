@@ -1,4 +1,5 @@
 #include <LiquidCrystal_I2C.h>
+#include <Wire.h>
 #include <WiFi.h>
 #include <ESP32Servo.h>
 #include <WiFiMulti.h>
@@ -123,12 +124,12 @@ void loop() {
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
 
-  
+  lcd.setCursor(0,0);
   lcd.print("Distance: ");
   lcd.print(Water_level);
-//  lcd.setCursor(1, 0);
-//  lcd.print("Light Int: ");
-//  lcd.print(ldrStatus);
+  lcd.setCursor(0,1);
+  lcd.print("Light Int: ");
+  lcd.print(ldrStatus);
 
 
 

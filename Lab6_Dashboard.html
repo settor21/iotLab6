@@ -22,7 +22,7 @@
 
 
 <button class="button-2" role="button" name="ESPLight1" onclick="updateByAJAX_ESP1Light()">ESP1: Light Intensity</button>
-<div id="tankdbData"></div>
+<div id="Light1"></div>
 
 <button class="button-1" role="button" name="ESPdist1" onclick="updateByAJAX_ESP1distance()">ESP1: Distance</button>
 <div id="Distance1"></div>
@@ -30,15 +30,15 @@
 <br>
 <br>
 
-<button class="button-3" role="button" name="charlotte" onclick="updateByAJAX_charlotteData()">ESP2: Light Intensity</button>
-<div id="charlotteData"></div>
+<button class="button-3" role="button" name="ESPLight2" onclick="updateByAJAX_ESP2Light()">ESP2: Light Intensity</button>
+<div id="Light2"></div>
 
-<button class="button-1" role="button" name="charlotte" onclick="updateByAJAX_CurrT2()">ESP2: Distance</button>
-<div id="CurrT2"></div>
+<button class="button-1" role="button" name="ESPdist2" onclick="updateByAJAX_ESP2distance()">ESP2: Distance</button>
+<div id="Distance2"></div>
 
     <br>
   <br>
-<p style="font-size: 120%;"> Click to select manual mode of operation of motor</p>
+<p style="font-size: 120%;"> Click to select manual mode of operation of motor</p> 
   
 
 <a href="http://192.168.137.204" class="button-1">ESP1 Motor Control</a>
@@ -59,10 +59,10 @@
 function updateByAJAX_ESP1Light(){
       const xhttp=new XMLHttpRequest();
       xhttp.onload=function(){
-        document.getElementById("tankdbData").innerText=this.responseText;
+        document.getElementById("Light1").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/midsemproject/iotMidsemProject/Retrievinglevel.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/ESP1_GetLight.php?");
       xhttp.send();
     }
 
@@ -76,23 +76,23 @@ function updateByAJAX_ESP1distance(){
       xhttp.send();
 }
 
-function updateByAJAX_CurrT2(){
+function updateByAJAX_ESP2distance(){
       const xhttp=new XMLHttpRequest();
       xhttp.onload=function(){
-        document.getElementById("CurrT2").innerText=this.responseText;
+        document.getElementById("Distance2").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/midsemproject/iotMidsemProject/getlastTank2.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/ESP2_GetDistance.php?");
       xhttp.send();
 }
 
-function updateByAJAX_charlotteData(){
+function updateByAJAX_ESP2Light(){
     const xhttp=new XMLHttpRequest();
     xhttp.onload=function(){
-        document.getElementById("charlotteData").innerText=this.responseText;
+        document.getElementById("Light2").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/midsemproject/iotMidsemProject/RetrieveCharlotte.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/ESP2_GetLight.php?");
       xhttp.send();
     }
 

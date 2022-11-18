@@ -1,4 +1,5 @@
-
+# create database sensor_data on localhost and import sql file as tables
+# edit dummy values and change to subscriber topic values
 import mysql.connector
 
 mydb = mysql.connector.connect(

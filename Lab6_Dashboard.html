@@ -21,11 +21,11 @@
 
 
 
-<button class="button-2" role="button" name="rooftop" onclick="updateByAJAX_tankdbData()">ESP1: Light Intensity</button>
+<button class="button-2" role="button" name="ESPLight1" onclick="updateByAJAX_ESP1Light()">ESP1: Light Intensity</button>
 <div id="tankdbData"></div>
 
-<button class="button-1" role="button" name="rooftop" onclick="updateByAJAX_Current()">ESP1: Distance</button>
-<div id="Current"></div>
+<button class="button-1" role="button" name="ESPdist1" onclick="updateByAJAX_ESP1distance()">ESP1: Distance</button>
+<div id="Distance1"></div>
 
 <br>
 <br>
@@ -56,7 +56,7 @@
 
 <script type="text/javascript">
 
-function updateByAJAX_tankdbData(){
+function updateByAJAX_ESP1Light(){
       const xhttp=new XMLHttpRequest();
       xhttp.onload=function(){
         document.getElementById("tankdbData").innerText=this.responseText;
@@ -66,13 +66,13 @@ function updateByAJAX_tankdbData(){
       xhttp.send();
     }
 
-function updateByAJAX_Current(){
+function updateByAJAX_ESP1distance(){
       const xhttp=new XMLHttpRequest();
       xhttp.onload=function(){
-        document.getElementById("Current").innerText=this.responseText;
+        document.getElementById("Distance1").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/midsemproject/iotMidsemProject/getlastTank1.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/ESP1_GetDistance.php?");
       xhttp.send();
 }
 

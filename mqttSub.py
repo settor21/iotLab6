@@ -2,7 +2,7 @@ import mysql.connector
 import paho.mqtt.client as mqtt
 
 MQTT_ADDRESS = '192.168.137.247'
-MQTT_USER = 'shiru.py'
+MQTT_USER = 'shirupi'
 MQTT_PASSWORD = 'baby'
 MQTT_TOPIC = 'ESPone/+'
 humidity = ""

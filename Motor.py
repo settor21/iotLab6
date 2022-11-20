@@ -14,7 +14,7 @@ LED_Pin = LED(13)
 
 
 def Start_fun(Start):
-    if client.publish(Start,"1"):
+    if mqtt.publish(Start,"1"):
         print("Start Motor")
         LED_Pin.on()
     else:
@@ -24,24 +24,30 @@ def Start_fun(Start):
 
 
 def Stop_fun(Stop):
-    if client.publish(Stop,"0"):
+    if mqtt.publish(Stop,"0"):
         print("Stop Motor")
         LED_Pin.off()
     return
+
+
 
 def on_connect(client, userdata, flags, rc):
     """ The callback for when the client receives a CONNACK response from the server."""
     print('Connected with result code ' + str(rc))
     # client.publish(MQTT_TOPIC)
+    Start_fun()
+    Stop_fun()
 
 
 def on_message(client, userdata, msg):
     """The callback for when a PUBLISH message is received from the server."""
-    #print(msg.topic + ' ' + str(msg.payload))
-    # if msg.topic == "Motor/1":
-    #     start = msg.payload
-    # if msg.topic == "Motor/2":
-    #     stop = msg.payload
+    print(msg.topic + ' ' + str(msg.payload))
+    if msg.topic == "Motor/1":
+        start = msg.payload
+    if msg.topic == "Motor/2":
+        stop = msg.payload
+
+
     # client.publish(MQTT_TOPIC1,val)
 
 # def pushData():
@@ -69,8 +75,7 @@ def main():
 
     mqtt_client.connect(MQTT_ADDRESS, 1883)
     
-    while(1):
-        mqtt_client.loop_forever()
+    mqtt_client.loop_forever()
         # pushData()
 
 

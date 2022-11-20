@@ -14,15 +14,11 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe(MQTT_TOPIC)
 
 
-def on_message_Temp(client, userdata, msg):
+def on_message(client, userdata, msg):
     """The callback for when a PUBLISH message is received from the server."""
     #print(msg.topic + ' ' + str(msg.payload))
     if msg.topic == "ESPone/1":
         temp = msg.payload
-    
-def on_message_Humidity(client, userdata, msg):
-    """The callback for when a PUBLISH message is received from the server."""
-    #print(msg.topic + ' ' + str(msg.payload))
     if msg.topic == "ESPone/2":
         humidity = msg.payload
 
@@ -47,8 +43,7 @@ def main():
     
     mqtt_client.on_connect = on_connect
     
-    mqtt_client.on_message_Humidity = on_message_Humidity
-    mqtt_client.on_message_Temp = on_message_Temp
+    mqtt_client.on_message = on_message
 
     mqtt_client.connect(MQTT_ADDRESS, 1883)
     

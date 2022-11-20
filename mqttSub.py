@@ -56,3 +56,4 @@ if __name__ == '__main__':
     print('MQTT to DB bridge')
     main()
     
+blood

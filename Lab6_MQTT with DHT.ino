@@ -10,6 +10,11 @@
 #define DHTTYPE DHT22 
 DHT dht(DHTPIN, DHTTYPE);
 
+// Motor Pin Declaration
+#define MotorPin 13
+#define LED_Pin 18
+
+int manualState = LOW;
 
 //---- WiFi settings
 const char* ssid = "Shiru";
@@ -31,17 +36,21 @@ unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE  (50)
 char msg[MSG_BUFFER_SIZE];
 
-int sensor1 = 0;
-float sensor2 = 0;
-float sensor3=0;
-int command1 =0;
+//int sensor1 = 0;
+//float sensor2 = 0;
+//float sensor3=0;
+//int command1 =0;
 
+//Mosquitto Publishing channels
 const char* sensor1_topic= "ESPone/1"; // publishing temperature
 const char*  sensor2_topic="ESPone/2"; // publishing humidity
-//const char*  sensor3_topic="";
+//const char*  sensor3_topic="Motor/1"; // Start
+//const char*  sensor4_topic = "Motor/2" // Stop
+
+//Mosquitto Subscription channels
 
 const char* command1_topic="ESPone/#";  // subscribing
-//const char* command2_topic="AshesiIoTTopic/#";
+const char* command2_topic="Motor/#";   // ESPone subscribing to rpi to get info from python application
 
 
 
@@ -85,7 +94,7 @@ void reconnect() {
       Serial.println("connected");
 
       client.subscribe(command1_topic);   // subscribe the topics here
-      //client.subscribe(command2_topic);   // subscribe the topics here
+      client.subscribe(command2_topic);   // subscribe the topics here
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -95,7 +104,6 @@ void reconnect() {
   }
 }
 
-//================================================ setup
 //================================================
 void setup() {
   Serial.begin(115200);
@@ -117,7 +125,6 @@ void setup() {
 }
 
 
-//================================================ loop
 //================================================
 void loop() {
 
@@ -165,22 +172,12 @@ void loop() {
     //client.connect(clientID, mqtt_username, mqtt_password);
     delay(10); // This delay ensures that client.publish doesn't clash with the client.connect call
     publishMessage(sensor2_topic, String(h),true);
+    Serial.println("Why is this here! @ Humidity section");
   }
 
     //client.disconnect();  // disconnect from the MQTT broker
-    //delay(1000*60);       // print new values every 1 Minute
+    delay(3000);       // print new values every 1 Minute
 
-  
-//  //---- example: how to publish sensor values every 5 sec
-//  unsigned long now = millis();
-//  if (now - lastMsg > 5000) {
-//    lastMsg = now;
-//    sensor1= random(50);       // replace the random value with your sensor value
-//    //sensor2= 20+random(80);    // replace the random value  with your sensor value
-//    //sensor2= 0+random(50);    // replace the random value  with your sensor value
-//    publishMessage(sensor1_topic,String(sensor1),true);    
-//    //publishMessage(sensor2_topic,String(sensor2),true);
-//    //publishMessage(sensor3_topic,String(sensor3),true);
     
   }
 
@@ -193,17 +190,29 @@ void callback(char* topic, byte* payload, unsigned int length) {
   
   Serial.println("Message arrived ["+String(topic)+"]"+incommingMessage);
   
-  //--- check the incomming message
+  // --- check the incomming message
     if( strcmp(topic,command1_topic) == 0){
      if (incommingMessage.equals("1")) digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on 
      else digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off 
   }
 
-   //  check for other commands
- /*  else  if( strcmp(topic,command2_topic) == 0){
-     if (incommingMessage.equals("1")) {  } // do something else
+   // --- check for other commands
+   
+   //Motor Control function goes here
+   else  if( strcmp(topic,command2_topic) == 0){
+     if (incommingMessage.equals("1")) {
+
+        digitalWrite(LED_Pin, HIGH);
+        //digitalWrite(Motor_Pin, HIGH);
+
+     else
+
+        digitalWrite(LED_Pin, LOW);
+        //digitalWrite(Motor_Pin,LOW);
+      
+      } // do something else
   }
-  */
+ 
 }
 
 
@@ -211,5 +220,5 @@ void callback(char* topic, byte* payload, unsigned int length) {
 //======================================= publising as string
 void publishMessage(const char* topic, String payload , boolean retained){
   if (client.publish(topic, payload.c_str(), true))
-      Serial.println("Message publised ["+String(topic)+"]: "+payload);
+      Serial.println("Message published ["+String(topic)+"]: "+payload);
 }

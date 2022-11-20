@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `lab6_data` (
   `ID` int(11) NOT NULL,
   `MCU_ID` int(11) NOT NULL,
-  `Light_Intensity` float NOT NULL,
-  `Distance` float NOT NULL,
+  `Temperature` float NOT NULL,
+  `Humidity` float NOT NULL,
   `Time` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -39,7 +39,7 @@ CREATE TABLE `lab6_data` (
 -- Dumping data for table `lab6_data`
 --
 
-INSERT INTO `lab6_data` (`ID`, `MCU_ID`, `Light_Intensity`, `Distance`, `Time`) VALUES
+INSERT INTO `lab6_data` (`ID`, `MCU_ID`, `Temperature`, `Humidity`, `Time`) VALUES
 (3, 1, 59, 78, '2022-11-17 22:02:02.032598'),
 (4, 1, 59, 78, '2022-11-17 22:08:25.468986'),
 (5, 1, 777, 888, '2022-11-17 22:10:32.644609'),

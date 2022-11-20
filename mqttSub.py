@@ -1,5 +1,7 @@
+import urllib.request
 import mysql.connector
 import paho.mqtt.client as mqtt
+
 
 MQTT_ADDRESS = '192.168.137.247'
 MQTT_USER = 'shirupi'
@@ -21,21 +23,10 @@ def on_message(client, userdata, msg):
         temp = msg.payload
     if msg.topic == "ESPone/2":
         humidity = msg.payload
+    url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
+    contents = urllib.request.urlopen(url).read()
+    print(contents)
 
-def pushData():
-    
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="sensor_data"
-    )
-    mycursor = mydb.cursor()
-    sql = "INSERT INTO lab6_data (MCU_ID,Light_Intensity,Distance) VALUES (%s,%s,%s)"
-    val = ("1", temp, humidity)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    print(mycursor.rowcount, "record inserted.")
 
 def main():
     mqtt_client = mqtt.Client()
@@ -47,9 +38,7 @@ def main():
 
     mqtt_client.connect(MQTT_ADDRESS, 1883)
     
-    while(1):
-        mqtt_client.loop_forever()
-        pushData()
+    mqtt_client.loop_forever()
 
 
 if __name__ == '__main__':

@@ -22,11 +22,15 @@ def on_message(client, userdata, msg):
 
     if msg.topic == "ESPone/1":
         temp = str(float(msg.payload))
-        placeholder = temp
+        with open('tempValue.txt', 'w') as f:
+            f.write(temp)
          
     if msg.topic == "ESPone/2":
         humidity = str(float(msg.payload))
-        temp = placeholder
+        
+        f = open('tempValue.txt', 'r')
+        temp = f.read()
+        
         url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
         contents = urllib.request.urlopen(url).read()
         print(contents)

@@ -1,14 +1,12 @@
 import urllib.request
 import mysql.connector
 import paho.mqtt.client as mqtt
-
+import time
 
 MQTT_ADDRESS = '192.168.137.247'
 MQTT_USER = 'shirupi'
 MQTT_PASSWORD = 'baby'
 MQTT_TOPIC = 'ESPone/+'
-humidity = ""
-temp=""
 
 def on_connect(client, userdata, flags, rc):
     """ The callback for when the client receives a CONNACK response from the server."""
@@ -18,14 +16,20 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     """The callback for when a PUBLISH message is received from the server."""
-    #print(msg.topic + ' ' + str(msg.payload))
+    print(msg.topic + ' ' + str(float(msg.payload)))
+    humidity = ""
+    temp=""
+
     if msg.topic == "ESPone/1":
-        temp = msg.payload
+        temp = str(float(msg.payload))
+        placeholder = temp
+         
     if msg.topic == "ESPone/2":
-        humidity = msg.payload
-    url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
-    contents = urllib.request.urlopen(url).read()
-    print(contents)
+        humidity = str(float(msg.payload))
+        temp = placeholder
+        url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
+        contents = urllib.request.urlopen(url).read()
+        print(contents)
 
 
 def main():

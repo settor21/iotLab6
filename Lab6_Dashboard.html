@@ -20,19 +20,19 @@
 
 
 
-<button class="button-2" role="button" name="ESPLight1" onclick="updateByAJAX_ESP1Light()">ESP1: Light Intensity</button>
+<button class="button-2" role="button" name="ESPLight1" onclick="updateByAJAX_ESP1Light()">ESP1: Temperature</button>
 <div id="Light1"></div>
 
-<button class="button-1" role="button" name="ESPdist1" onclick="updateByAJAX_ESP1distance()">ESP1: Distance</button>
+<button class="button-1" role="button" name="ESPdist1" onclick="updateByAJAX_ESP1distance()">ESP1: Humidity</button>
 <div id="Distance1"></div>
 
 <br>
 <br>
 
-<button class="button-3" role="button" name="ESPLight2" onclick="updateByAJAX_ESP2Light()">ESP2: Light Intensity</button>
+<button class="button-3" role="button" name="ESPLight2" onclick="updateByAJAX_ESP2Light()">ESP2: Temperature</button>
 <div id="Light2"></div>
 
-<button class="button-1" role="button" name="ESPdist2" onclick="updateByAJAX_ESP2distance()">ESP2: Distance</button>
+<button class="button-1" role="button" name="ESPdist2" onclick="updateByAJAX_ESP2distance()">ESP2: Humidity</button>
 <div id="Distance2"></div>
 
     <br>
@@ -61,7 +61,7 @@ function updateByAJAX_ESP1Light(){
         document.getElementById("Light1").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/ESP1_GetLight.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP1_GetLight.php?");
       xhttp.send();
     }
 
@@ -71,7 +71,7 @@ function updateByAJAX_ESP1distance(){
         document.getElementById("Distance1").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/ESP1_GetDistance.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP1_GetDistance.php?");
       xhttp.send();
 }
 
@@ -81,7 +81,7 @@ function updateByAJAX_ESP2distance(){
         document.getElementById("Distance2").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/ESP2_GetDistance.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP2_GetDistance.php?");
       xhttp.send();
 }
 
@@ -91,7 +91,7 @@ function updateByAJAX_ESP2Light(){
         document.getElementById("Light2").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/ESP2_GetLight.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP2_GetLight.php?");
       xhttp.send();
     }
 

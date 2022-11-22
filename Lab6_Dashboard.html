@@ -37,12 +37,7 @@
 
     <br>
   <br>
-<p style="font-size: 120%;"> Click to select manual mode of operation of motor</p> 
-  
 
-<a href="http://192.168.137.204" class="button-1">ESP1 Motor Control</a>
-<br>
-<br>
 
 
 
@@ -61,7 +56,7 @@ function updateByAJAX_ESP1Light(){
         document.getElementById("Light1").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP1_GetLight.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP1_GetDistance.php?");
       xhttp.send();
     }
 
@@ -71,17 +66,7 @@ function updateByAJAX_ESP1distance(){
         document.getElementById("Distance1").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP1_GetDistance.php?");
-      xhttp.send();
-}
-
-function updateByAJAX_ESP2distance(){
-      const xhttp=new XMLHttpRequest();
-      xhttp.onload=function(){
-        document.getElementById("Distance2").innerText=this.responseText;
-      }
-      
-      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP2_GetDistance.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP1_GetLight.php?");
       xhttp.send();
 }
 
@@ -91,9 +76,22 @@ function updateByAJAX_ESP2Light(){
         document.getElementById("Light2").innerText=this.responseText;
       }
       
-      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP2_GetLight.php?");
+      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP2_GetDistance.php?");
       xhttp.send();
     }
+
+
+
+function updateByAJAX_ESP2distance(){
+      const xhttp=new XMLHttpRequest();
+      xhttp.onload=function(){
+        document.getElementById("Distance2").innerText=this.responseText;
+      }
+      
+      xhttp.open("GET", "http://localhost/iotinhtdocs/iotlab6/ESP2_GetLight.php?");
+      xhttp.send();
+}
+
 
 
 

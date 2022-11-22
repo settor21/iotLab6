@@ -11,7 +11,7 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 // Motor Pin Declaration
-#define MotorPin 2
+//#define MotorPin 2
 
 //---- WiFi settings
 const char* ssid = "Shiru";
@@ -35,15 +35,12 @@ char msg[MSG_BUFFER_SIZE];
 
 
 //Mosquitto Publishing channels
-const char* sensor1_topic= "ESPone/1"; // publishing temperature
-const char*  sensor2_topic="ESPone/2"; // publishing humidity
-//const char*  sensor3_topic="Motor/1"; // Start
-//const char*  sensor4_topic = "Motor/2" // Stop
+const char* sensor1_topic= "ESPtwo/1"; // publishing temperature
+const char*  sensor2_topic="ESPtwo/2"; // publishing humidity
 
 //Mosquitto Subscription channels
 
-const char* command1_topic="ESPone/#";  // subscribing
-const char* command2_topic="Motor/#";   // ESPone subscribing to rpi to get info from python application
+const char* command1_topic="ESPtwo/#";  // subscribing
 
 
 //==========================================
@@ -85,7 +82,7 @@ void reconnect() {
       Serial.println("connected");
 
       client.subscribe(command1_topic);   // subscribe the topics here
-      client.subscribe(command2_topic);   // subscribe the topics here
+    //  client.subscribe(command2_topic);   // subscribe the topics here
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -103,8 +100,7 @@ void setup() {
   Serial.println("Setting up");
   setup_wifi();
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
-  pinMode(MotorPin, OUTPUT); 
-//
+  
 //  #ifdef ESP8266
 //    espClient.setInsecure();
 //  #else   // for the ESP32
@@ -148,7 +144,7 @@ void loop() {
   else {
     Serial.println("Temperature failed to send. Reconnecting to MQTT Broker and trying again");
     //client.connect(clientID, mqtt_username, mqtt_password);
-   // delay(10); // This delay ensures that client.publish doesn't clash with the client.connect call
+    delay(10); // This delay ensures that client.publish doesn't clash with the client.connect call
     publishMessage(sensor1_topic, String(t),true);
   }
 
@@ -167,7 +163,7 @@ void loop() {
   }
 
     //client.disconnect();  // disconnect from the MQTT broker
-    delay(3000);       // print new values every 1 Minute
+    delay(1500);       // print new values every 1 Minute
 
     
   }
@@ -190,20 +186,21 @@ void callback(char* topic, byte* payload, unsigned int length) {
    // --- check for other commands
    
    //Motor Control function goes here
-    if( strcmp(topic,command2_topic) == 0){
-     if (incommingMessage.equals("1")) {
+ //   if( strcmp(topic,command2_topic) == 0){
+   //  if (incommingMessage.equals("1")) {
 
-        digitalWrite(MotorPin, HIGH);
-     }
+    //    digitalWrite(MotorPin, HIGH);
+    // }
 
-     else if (incommingMessage.equals("0")){
+  //   else if (incommingMessage.equals("0")){
 
-        digitalWrite(MotorPin, LOW);
+      //  digitalWrite(MotorPin, LOW);
        
-      } 
-  }
+    //  } 
+ // }
  
 }
+
 
 
 //======================================= publising as string

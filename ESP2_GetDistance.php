@@ -16,7 +16,7 @@
 
    if ($q=mysqli_query($con, $sql)) {
     while ($row = $q->fetch_assoc()){
-        echo "{$row['Distance']}  {$row['Time']} \n\n\n"; //."<br/>";
+        echo "{$row['Temperature']}  {$row['Time']} \n\n\n"; //."<br/>";
     }
    } 
    

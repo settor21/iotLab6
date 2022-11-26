@@ -28,7 +28,7 @@ def on_message(client, userdata, msg):
     if msg.topic == "ESPone/2":
         humidity = str(float(msg.payload))
         
-        f = open('tempValue.txt', 'r')
+        f = open('temp6Value.txt', 'r')
         temp = f.read()
         
         url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)

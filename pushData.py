@@ -34,22 +34,7 @@ def on_message(client, userdata, msg):
     url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
     contents = urllib.request.urlopen(url).read()
     print(contents)
-        
-    if msg.topic == "ESPtwo/1":
-        temp = str(float(msg.payload))
-        with open('tempValue.txt', 'w') as f:
-            f.write(temp)
-         
-    if msg.topic == "ESPtwo/2":
-        humidity = str(float(msg.payload))
-        
-        f = open('tempValue.txt', 'r')
-        temp = f.read()
-        
-       
-        url = "http://127.0.0.1/iotlab6/Lab6_ESP2.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
-        contents = urllib.request.urlopen(url).read()
-        print(contents)
+
 
 
 def main():

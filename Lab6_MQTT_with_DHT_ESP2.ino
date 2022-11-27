@@ -11,10 +11,7 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 // Motor Pin Declaration
-#define MotorPin 13
-#define LED_Pin 18
-
-int manualState = LOW;
+//#define MotorPin 2
 
 //---- WiFi settings
 const char* ssid = "Shiru";
@@ -36,23 +33,14 @@ unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE  (50)
 char msg[MSG_BUFFER_SIZE];
 
-//int sensor1 = 0;
-//float sensor2 = 0;
-//float sensor3=0;
-//int command1 =0;
 
 //Mosquitto Publishing channels
-const char* sensor1_topic= "ESPone/1"; // publishing temperature
-const char*  sensor2_topic="ESPone/2"; // publishing humidity
-//const char*  sensor3_topic="Motor/1"; // Start
-//const char*  sensor4_topic = "Motor/2" // Stop
+const char* sensor1_topic= "ESPtwo/1"; // publishing temperature
+const char*  sensor2_topic="ESPtwo/2"; // publishing humidity
 
 //Mosquitto Subscription channels
 
-const char* command1_topic="ESPone/#";  // subscribing
-const char* command2_topic="Motor/#";   // ESPone subscribing to rpi to get info from python application
-
-
+const char* command1_topic="ESPtwo/#";  // subscribing
 
 
 //==========================================
@@ -94,12 +82,12 @@ void reconnect() {
       Serial.println("connected");
 
       client.subscribe(command1_topic);   // subscribe the topics here
-      client.subscribe(command2_topic);   // subscribe the topics here
+    //  client.subscribe(command2_topic);   // subscribe the topics here
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");   // Wait 5 seconds before retrying
-      delay(5000);
+      delay(1500);
     }
   }
 }
@@ -112,8 +100,7 @@ void setup() {
   Serial.println("Setting up");
   setup_wifi();
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
-
-//
+  
 //  #ifdef ESP8266
 //    espClient.setInsecure();
 //  #else   // for the ESP32
@@ -176,7 +163,7 @@ void loop() {
   }
 
     //client.disconnect();  // disconnect from the MQTT broker
-    delay(3000);       // print new values every 1 Minute
+    delay(1500);       // print new values every 1 Minute
 
     
   }
@@ -199,19 +186,18 @@ void callback(char* topic, byte* payload, unsigned int length) {
    // --- check for other commands
    
    //Motor Control function goes here
-   else  if( strcmp(topic,command2_topic) == 0){
-     if (incommingMessage.equals("1")) {
+ //   if( strcmp(topic,command2_topic) == 0){
+   //  if (incommingMessage.equals("1")) {
 
-        digitalWrite(LED_Pin, HIGH);
-        //digitalWrite(Motor_Pin, HIGH);
+    //    digitalWrite(MotorPin, HIGH);
+    // }
 
-     else
+  //   else if (incommingMessage.equals("0")){
 
-        digitalWrite(LED_Pin, LOW);
-        //digitalWrite(Motor_Pin,LOW);
-      
-      } // do something else
-  }
+      //  digitalWrite(MotorPin, LOW);
+       
+    //  } 
+ // }
  
 }
 

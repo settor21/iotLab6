@@ -8,6 +8,9 @@ MQTT_USER = 'shirupi'
 MQTT_PASSWORD = 'baby'
 MQTT_TOPIC = 'ESPtwo/+'
 
+MQTT_TOPIC = 'ESPone/+'
+
+
 def on_connect(client, userdata, flags, rc):
     """ The callback for when the client receives a CONNACK response from the server."""
     print('Connected with result code ' + str(rc))
@@ -20,6 +23,10 @@ def on_message(client, userdata, msg):
     humidity = ""
     temp=""
 
+
+
+        
+
     if msg.topic == "ESPtwo/1":
         temp = str(float(msg.payload))
         with open('tempValue.txt', 'w') as f:
@@ -31,7 +38,12 @@ def on_message(client, userdata, msg):
         f = open('tempValue.txt', 'r')
         temp = f.read()
         
+
         url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
+
+       
+        url = "http://127.0.0.1/iotlab6/Lab6_ESP2.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
+
         contents = urllib.request.urlopen(url).read()
         print(contents)
 

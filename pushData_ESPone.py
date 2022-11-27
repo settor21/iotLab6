@@ -31,9 +31,10 @@ def on_message(client, userdata, msg):
         f = open('temp6Value.txt', 'r')
         temp = f.read()
         
-        url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
-        contents = urllib.request.urlopen(url).read()
-        print(contents)
+    url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
+    contents = urllib.request.urlopen(url).read()
+    print(contents)
+
 
 
 def main():

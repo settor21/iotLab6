@@ -181,22 +181,16 @@ void callback(char* topic, byte* payload, unsigned int length) {
   
   Serial.println("Message arrived ["+String(topic)+"]"+incommingMessage);
   
-  // --- check the incomming message
-    if( strcmp(topic,command1_topic) == 0){
-     if (incommingMessage.equals("1")) digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on 
-     else digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off 
-  }
-
+  
    // --- check for other commands
    
    //Motor Control function goes here
-    if( strcmp(topic,sensor3_topic) == 0){
-     if (incommingMessage.equals("ON")) {
+     if (incommingMessage =="ON") {
 
         digitalWrite(MotorPin, HIGH);
      }
 
-     else if (incommingMessage.equals("OFF")){
+     else if (incommingMessage =="OFF"){
 
         digitalWrite(MotorPin, LOW);
        

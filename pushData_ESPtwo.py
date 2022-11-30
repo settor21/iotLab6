@@ -1,14 +1,14 @@
 import urllib.request
-import mysql.connector
+#import mysql.connector
 import paho.mqtt.client as mqtt
 import time
 
-MQTT_ADDRESS = '192.168.137.247'
+MQTT_ADDRESS = '192.168.137.239'
 MQTT_USER = 'shirupi'
 MQTT_PASSWORD = 'baby'
 MQTT_TOPIC = 'ESPtwo/+'
 
-MQTT_TOPIC = 'ESPone/+'
+#MQTT_TOPIC = 'ESPone/+'
 
 
 def on_connect(client, userdata, flags, rc):
@@ -39,10 +39,10 @@ def on_message(client, userdata, msg):
         temp = f.read()
         
 
-        url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
+        #url = "http://127.0.0.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
 
        
-        url = "http://127.0.0.1/iotlab6/Lab6_ESP2.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
+        url = "http://127.0.0.1/iotinhtdocs/midsemproject/iotLab6/Lab6_ESP2.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
 
         contents = urllib.request.urlopen(url).read()
         print(contents)

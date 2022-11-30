@@ -1,5 +1,5 @@
 import urllib.request
-import mysql.connector
+# import mysql.connector
 import paho.mqtt.client as mqtt
 import time
 
@@ -28,10 +28,10 @@ def on_message(client, userdata, msg):
     if msg.topic == "ESPone/2":
         humidity = str(float(msg.payload))
         
-        f = open('temp6Value.txt', 'r')
+        f = open('tempValue.txt', 'r')
         temp = f.read()
         
-    url = "http://192.168.127.1/iotlab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
+    url = "http://192.168.137.1/iotinhtdocs/midsemproject/iotLab6/Lab6.php?Temperature="+str(temp)+"&Humidity="+str(humidity)
     contents = urllib.request.urlopen(url).read()
     print(contents)
 

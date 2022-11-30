@@ -7,21 +7,21 @@
 // DHT22 Declaration
 
 #define DHTPIN 4
-#define DHTTYPE DHT22 
+#define DHTTYPE DHT11 
 DHT dht(DHTPIN, DHTTYPE);
 
 // Motor Pin Declaration
 #define MotorPin 2
 
 //---- WiFi settings
-const char* ssid = "Shiru";
-const char* password = "12345678";
+const char* ssid = "Uche";
+const char* password = "ashesiclassof2023";
 
 
 
 
 //---- MQTT Broker settings
-const char* mqtt_server = "192.168.137.247"; // replace with your broker url
+const char* mqtt_server = "192.168.137.239"; // replace with your broker url
 
 const int mqtt_port =1883;
 
@@ -37,13 +37,13 @@ char msg[MSG_BUFFER_SIZE];
 //Mosquitto Publishing channels
 const char* sensor1_topic= "ESPone/1"; // publishing temperature
 const char*  sensor2_topic="ESPone/2"; // publishing humidity
-//const char*  sensor3_topic="Motor/1"; // Start
+const char*  sensor3_topic="Motor/state"; // Start
 //const char*  sensor4_topic = "Motor/2" // Stop
 
 //Mosquitto Subscription channels
 
 const char* command1_topic="ESPone/#";  // subscribing
-const char* command2_topic="Motor/#";   // ESPone subscribing to rpi to get info from python application
+// const char* command2_topic="Motor/#";   // ESPone subscribing to rpi to get info from python application
 
 
 //==========================================
@@ -85,7 +85,7 @@ void reconnect() {
       Serial.println("connected");
 
       client.subscribe(command1_topic);   // subscribe the topics here
-      client.subscribe(command2_topic);   // subscribe the topics here
+      // client.subscribe(command2_topic);   // subscribe the topics here
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -190,13 +190,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
    // --- check for other commands
    
    //Motor Control function goes here
-    if( strcmp(topic,command2_topic) == 0){
-     if (incommingMessage.equals("1")) {
+    if( strcmp(topic,sensor3_topic) == 0){
+     if (incommingMessage.equals("ON")) {
 
         digitalWrite(MotorPin, HIGH);
      }
 
-     else if (incommingMessage.equals("0")){
+     else if (incommingMessage.equals("OFF")){
 
         digitalWrite(MotorPin, LOW);
        

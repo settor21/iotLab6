@@ -1,8 +1,8 @@
 import paho.mqtt.publish as publish
 import paho.mqtt.client as mqtt
-from gpiozero import LED
+# from gpiozero import LED
 
-MQTT_SERVER = '192.168.137.247'
+MQTT_SERVER = '192.168.137.239'
 MQTT_USER = 'shirupi'
 MQTT_PASSWORD = 'baby'
 MQTT_PORT = 1883
@@ -12,8 +12,8 @@ Motor_State= 'Motor/state'
 
 
 
-publish.single(Motor_State,"OFF",hostname = MQTT_ADDRESS)
-publish.single(Motor_State,"ON",hostname = MQTT_ADDRESS)
+publish.single(Motor_State,"OFF",hostname = MQTT_SERVER)
+# publish.single(Motor_State,"ON",hostname = MQTT_SERVER)
 
 
 # LED_Pin = LED(13)
